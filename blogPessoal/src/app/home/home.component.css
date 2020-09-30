@@ -1,0 +1,9 @@
+.parallax {
+    background-image: url('https://exame.com/wp-content/uploads/2019/06/pia12567-full.png');
+
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
