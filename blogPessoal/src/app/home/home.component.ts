@@ -9,7 +9,9 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit()               /* Pra estatizar a pg no topo quando abri-la */
+  {                        /* 1) apagar o : void */ 
+      window.scroll(0,0)   /* e acrescentar esse código */
   }
 
 }
