@@ -12,9 +12,11 @@
                     <a class="nav-link texto text-monospace  text-uppercase  font-weight-bold    p-3" routerLink='/home'>Home <span class="sr-only">(página atual)</span></a>
                 </li>
 
+                <div *ngIf='auth.btnSair()'> 
                 <li class="nav-item">
                     <a class="nav-link texto text-monospace text-uppercase   font-weight-bold    p-3" routerLink='/feed'>Feed</a>
                 </li>
+                </div>
 
             <!-- configuração do botão Login / esconder quando estiver logado -->
                 <div *ngIf='auth.btnLogin()'>   
