@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Postagem } from '../model/Postagem';
 import { Tema } from '../model/Tema';
+import { AlertasService } from '../service/alertas.service';
 import { PostagemService } from '../service/postagem.service';
 import { TemaService } from '../service/tema.service';
 
@@ -17,15 +18,18 @@ export class FeedComponent implements OnInit {
   //Var relacionadas às Postagens
   postagem: Postagem = new Postagem()
   listaPostagens: Postagem[]
+  titulo: string 
 
   //Var relacionadas aos temas
   tema: Tema = new Tema()
   listaTemas: Tema[]
   idTema: number
+  nomeTema: string
 
   constructor(
     private postagemService: PostagemService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private alerta: AlertasService
     ) 
     { }
 
@@ -42,6 +46,18 @@ export class FeedComponent implements OnInit {
       this.postagemService.getAllPostagens().subscribe((resp: Postagem[]) => {this.listaPostagens = resp})
   }
 
+  findByTituloPostagem()
+  {
+    if (this.titulo === '')
+    {
+      this.findAllPostagens()
+    }
+    else 
+    {
+      this.postagemService.getByTituloPostagem(this.titulo).subscribe((resp: Postagem[]) => {this.listaPostagens = resp})
+    }
+  }
+
   publicar()
   {
     this.tema.id = this.idTema
@@ -49,13 +65,13 @@ export class FeedComponent implements OnInit {
 
     if (this.postagem.titulo == null || this.postagem.texto == null || this.postagem.tema == null)
     {
-        alert('É necessário preencher todos os campos.')
+        this.alerta.showAlertDanger('É necessário preencher todos os campos.')
     }
     else 
     {
       this.postagemService.postPostagem(this.postagem).subscribe((resp: Postagem) => {this.postagem = resp
       this.postagem = new Postagem()
-      alert ('Postagem realizada com sucesso!')
+      this.alerta.showAlertSuccess ('Postagem realizada com sucesso!')
       this.findAllPostagens()
     })
 
@@ -71,6 +87,18 @@ export class FeedComponent implements OnInit {
   findByIdTema()
   {
     this.temaService.getByIdTema(this.idTema).subscribe((resp: Tema) => {this.tema = resp})
+  }
+
+  findByNomeTema()
+  {
+    if (this.nomeTema === '')
+    {
+      this.findAllTemas()
+    }
+    else{
+      this.temaService.getByNomeTema(this.nomeTema).subscribe((resp: Tema[]) => {this.listaTemas = resp
+      })
+    }
   }
 
 }
