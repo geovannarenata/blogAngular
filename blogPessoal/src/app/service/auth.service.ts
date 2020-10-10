@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
 import { User } from '../model/User';
 import { UserLogin } from '../model/UserLogin';
 
@@ -23,9 +24,11 @@ export class AuthService {
   btnSair()
   {
     let ok = false
-    let token = localStorage.getItem('token')
-
-    if (token != null)
+  /*  let token = localStorage.getItem('token') >> código anterior */
+  
+  /* refatoração do Token para Console e não localStorage*/
+    let token = environment.token
+    if (token != '')
     {
       ok = true
     }
@@ -37,9 +40,12 @@ export class AuthService {
   {
     
     let ok = false
-    let token = localStorage.getItem('token')
+  /*  let token = localStorage.getItem('token') >> código anterior */
 
-    if (token == null)
+  /* refatoração do Token para Console e não localStorage*/
+    let token = environment.token
+
+    if (token == '')  /* tirei o null por conta do environment */
     {
       ok = true
     }
